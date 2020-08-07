@@ -1,0 +1,35 @@
+@font-face { 
+  font-family: "MarvelPro"; 
+  src: url("../../Assets/font/MavenPro-Regular.ttf"); 
+}
+.userCard {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+padding-top: 100px;
+  .wrapperImage {
+    width: 30%;
+  }
+  .userPhoto {
+    transform: scale(1.4);
+    border-radius: 50%;
+   
+  }
+  .wrapperAbout {
+    width: 45%;
+    font-family: MarvelPro;
+  }
+  .wrapperAbout h2 {
+    // font-family: MarvelPro;
+    font-weight: 300;
+    font-size: 30px;
+    color: white;
+  }
+  .wrapperAbout p {
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+  }
+}

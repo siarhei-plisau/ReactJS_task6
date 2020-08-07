@@ -1,0 +1,23 @@
+@font-face { 
+    font-family: "MarvelPro"; 
+    src: url("../../Assets/font/MavenPro-Regular.ttf"); 
+}
+.footer {
+    height: 50px;
+    background-color: #363535;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    p {
+      margin: 8px 20px;
+      color: rgba(255, 255, 255, 0.76);
+      font-family: MarvelPro;
+      font-size: 14px;
+    }
+
+    a{
+      color: #2eb398;
+      text-decoration: none;
+    }
+}

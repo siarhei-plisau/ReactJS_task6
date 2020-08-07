@@ -1,0 +1,27 @@
+@font-face { 
+    font-family: "MarvelPro"; 
+    src: url("../../Assets/font/MavenPro-Regular.ttf"); 
+  }
+.menu {
+    width: 50%;
+    margin-right: 25px;
+  .list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    height: 40px;
+    margin: 10px 0;
+  }
+  li a {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #2eb398;
+    font-family: MarvelPro;
+    font-size: 18px;
+    font-weight: 550;
+      &:hover {
+        color: white;
+      } 
+  }
+}

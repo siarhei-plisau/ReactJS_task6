@@ -1,0 +1,21 @@
+@font-face { 
+    font-family: "MarvelPro"; 
+    src: url("../../Assets/font/MavenPro-Regular.ttf"); 
+  }
+.userLogo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 20%;
+    margin-left: 15px;
+  }
+  .userLogo img {
+    position: relative;
+    width: 40px;
+    height: auto;
+    border-radius: 50%;
+  }
+  .userLogo p {
+    color: white;
+    font-family: MarvelPro;
+  }
