@@ -3,13 +3,12 @@ import styles from './Header.module.scss';
 import UserAvatar from '../UserAvatar';
 import MenuList from '../MenuList';
 
-function Header({ userData }) {
+function Header(props) {
   return (
     <header className={styles.header}>
-      <UserAvatar userData={userData} />
+      <UserAvatar {...props} />
       <MenuList />
     </header>
   );
 }
-
 export default Header;

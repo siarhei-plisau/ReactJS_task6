@@ -1,4 +1,4 @@
-@font-face { 
+    @font-face { 
   font-family: "MarvelPro"; 
   src: url("../../Assets/font/MavenPro-Regular.ttf"); 
 }
@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-padding-top: 100px;
+  padding-top: 100px;
   .wrapperImage {
     width: 30%;
   }
@@ -22,10 +22,10 @@ padding-top: 100px;
     font-family: MarvelPro;
   }
   .wrapperAbout h2 {
-    // font-family: MarvelPro;
+    font-family: MarvelPro;
     font-weight: 300;
     font-size: 30px;
-    color: white;
+    color: rgb(241, 231, 231);
   }
   .wrapperAbout p {
     color: black;

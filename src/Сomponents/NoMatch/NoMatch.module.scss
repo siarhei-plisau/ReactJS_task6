@@ -1,0 +1,16 @@
+.wrapperError {
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.numberError {
+    margin: 20px;
+    font-size: 100px;
+    color: rgb(219, 59, 59);
+}
+.description, .decision {
+    font-size: 20px;
+    margin: 0;
+}

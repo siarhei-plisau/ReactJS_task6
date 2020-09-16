@@ -1,0 +1,53 @@
+@font-face { 
+    font-family: "MarvelPro"; 
+    src: url("../../Assets/font/MavenPro-Regular.ttf"); 
+  }
+
+.formLogin {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 70px auto;
+  width: 200px;
+  height: 250px;
+  border: 1px solid rgb(218, 207, 207);
+  border-radius: 10px;
+  color: rgb(241, 229, 229);
+  font-family: MarvelPro;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.42);
+    .errorLogin {
+      border: 1px red solid;
+      position: absolute;
+      top: -45px;
+      color: rgba(255, 0, 0, 0.733);
+      // font-weight: 700;
+      font-size: 16px;
+    }
+}
+.userName, .password {
+    display: block;
+    width: 150px;
+    height: 20px;
+    margin: 5px auto;
+    border: none;
+    border-radius: 5px;
+    &:focus {
+        outline: none; 
+    }
+}
+
+button {
+    background-color: aquamarine;
+    border-radius: 3px;
+    border: none;
+    height: 30px;
+    &:focus {
+        outline: none; 
+    }
+    &:hover {
+        background-color: #30ac81;
+    }
+}
+

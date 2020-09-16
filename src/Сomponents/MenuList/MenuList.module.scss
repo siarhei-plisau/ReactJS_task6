@@ -7,7 +7,7 @@
     margin-right: 25px;
   .list {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     list-style: none;
     height: 40px;
@@ -20,6 +20,7 @@
     font-family: MarvelPro;
     font-size: 18px;
     font-weight: 550;
+    margin-right: 20px;
       &:hover {
         color: white;
       } 
