@@ -1,88 +1,81 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import styles from './CardsCreationForm.module.scss';
 import FormError from '../FormError';
 
-export default class CardsCreationForm extends React.Component {
-  constructor(props) {
+import {
+  changePrice,
+  changeTitle,
+  changeImageUrl,
+  changeAbout,
+  addNewCard,
+  setErrorForm,
+ } from '../../redux/actions';
+
+class CardsCreationForm extends React.Component {
+    constructor(props) {
     super(props);
     this.price = React.createRef();
     this.title = React.createRef();
     this.imageUrl = React.createRef();
     this.about = React.createRef();
-
-    this.state = {
-      price: '',
-      title: '',
-      imageUrl: '',
-      about: '',
-      errorForm: {
-        price: false,
-        title: false,
-        imageUrl: false,
-        about: false,
-      }, 
-    }
-    this.handleChangePrice = this.handleChangePrice.bind(this);
-    this.handleChangeTitle = this.handleChangeTitle.bind(this);
-    this.handleChangeImageUrl = this.handleChangeImageUrl.bind(this);
-    this.handleChangeAbout = this.handleChangeAbout.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.checkError = this.checkError.bind(this);
   }
-
-  checkError() {
+  checkError= () => {
     this.errorLabel = false;
-    const copyState = Object.assign({}, this.state);
-    for (const key in copyState.errorForm) {
-       copyState.errorForm[key] = false;
+    const {setErrorForm, valueOfInputs} = this.props;
+    const objectOfError = {
+      price: false,
+      title: false,
+      imageUrl: false,
+      about: false 
     }
-    for (const key in copyState) {
-      if( key === 'errorForm' ) continue;
-      if ( !copyState[key] ) {
-        copyState.errorForm[key] = true;
-        this.setState( state => ({ copyState }));
+    setErrorForm(objectOfError);
+    for (const key in valueOfInputs) {
+      if ( !valueOfInputs[key] ) {
+        objectOfError[key] = true;
+        setErrorForm(objectOfError);
         this[key].current.focus();
         this.errorLabel = true;
         break;
       }
     }
-    return this.errorLabel ? true : false;
+    return this.errorLabel;
   }
-
-  handleSubmit(event) {
-    event.preventDefault();
+    
+  handleSubmit = (e) => {
+    e.preventDefault();
     if ( this.checkError() ) return;
+    const { addNewCard,
+            handleChangePrice,
+            handleChangeTitle,
+            handleChangeImageUrl,
+            handleChangeAbout
+    } = this.props;
+    const objectOfError = {
+      price: false,
+      title: false,
+      imageUrl: false,
+      about: false 
+    }
+    const {price, title, imageUrl, about} = this.props.valueOfInputs;
     const id = new Date();
-    const {price, title, imageUrl, about} = this.state;
-    const {addNewCard} = this.props;
-    addNewCard({id, price, title, imageUrl, about});
-    this.setState( state => ({
-      price: '',
-      title: '',
-      imageUrl: '',
-      about: '',
-      errorForm: {
-        price: false,
-        title: false,
-        imageUrl: false,
-        about: false,
-      },
-    }));
+    addNewCard(price, title, imageUrl, about, id);
+    setErrorForm(objectOfError);
+    handleChangePrice('');
+    handleChangeTitle('');
+    handleChangeImageUrl('');
+    handleChangeAbout('');
   }
 
-  handleChangePrice(event) {
-    this.setState({price: event.target.value});
-  }
-  handleChangeTitle(event) {
-    this.setState({title: event.target.value});
-  }
-  handleChangeImageUrl(event) {
-    this.setState({imageUrl: event.target.value});
-  }
-  handleChangeAbout(event) {
-    this.setState({about: event.target.value})
-  }
   render() {
+    const { valueOfInputs,
+            errorForm,
+            handleChangePrice,
+            handleChangeTitle,
+            handleChangeImageUrl,
+            handleChangeAbout,
+          } = this.props;
     return (
       <form onSubmit={this.handleSubmit} className={styles.form}>
         <label>
@@ -91,10 +84,10 @@ export default class CardsCreationForm extends React.Component {
             ref={this.price}
             type="number"
             className={styles.inputPrice}
-            value={this.state.price}
-            onChange={this.handleChangePrice}
-            />
-          { this.state.errorForm.price && !this.state.price ? <FormError /> : null}
+            value={valueOfInputs.price}
+            onChange={ (e) => handleChangePrice(e.target.value) }
+          />
+          { errorForm.price && !valueOfInputs.price ? <FormError /> : null}
         </label>
 
         <label>
@@ -103,10 +96,10 @@ export default class CardsCreationForm extends React.Component {
             ref={this.title}
             type="text"
             className={styles.inputTitle}
-            value={this.state.title}
-            onChange={this.handleChangeTitle}
+            value={valueOfInputs.title}
+            onChange={ (e) => handleChangeTitle(e.target.value) }
           />
-          { this.state.errorForm.title && !this.state.title ? <FormError /> : null}
+          { errorForm.title && !valueOfInputs.title ? <FormError /> : null}
         </label>
 
         <label>
@@ -114,10 +107,10 @@ export default class CardsCreationForm extends React.Component {
           <input
             ref={this.imageUrl}
             type="text"
-            value={this.state.imageUrl}
-            onChange={this.handleChangeImageUrl}
+            value={valueOfInputs.imageUrl}
+            onChange={ (e) => handleChangeImageUrl(e.target.value) }
           />
-          {this.state.errorForm.imageUrl && !this.state.imageUrl ? <FormError /> : null}
+          {errorForm.imageUrl && !valueOfInputs.imageUrl ? <FormError /> : null}
         </label>
 
         <label>
@@ -125,13 +118,43 @@ export default class CardsCreationForm extends React.Component {
           <input
             ref={this.about}
             type="text"
-            value={this.state.about}
-            onChange={this.handleChangeAbout}
+            value={valueOfInputs.about}
+            onChange={ (e) => handleChangeAbout(e.target.value) }
           />
-          {this.state.errorForm.about && !this.state.about ? <FormError /> : null}
+          {errorForm.about && !valueOfInputs.about ? <FormError /> : null}
         </label>
         <button type="submit">creat card</button> 
       </form>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    valueOfInputs: {
+      price: state.operationsWithCards.price,
+      title: state.operationsWithCards.title,
+      imageUrl: state.operationsWithCards.imageUrl,
+      about: state.operationsWithCards.about,
+    },
+    errorForm: {
+      price: state.operationsWithCards.errorForm.price,
+      title: state.operationsWithCards.errorForm.title,
+      imageUrl: state.operationsWithCards.errorForm.imageUrl,
+      about: state.operationsWithCards.errorForm.about,
+      }
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleChangePrice: bindActionCreators(changePrice, dispatch),
+    handleChangeTitle: bindActionCreators(changeTitle, dispatch),
+    handleChangeImageUrl: bindActionCreators(changeImageUrl, dispatch),
+    handleChangeAbout: bindActionCreators(changeAbout, dispatch),
+    addNewCard: bindActionCreators(addNewCard, dispatch),
+    setErrorForm: bindActionCreators(setErrorForm, dispatch),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CardsCreationForm);

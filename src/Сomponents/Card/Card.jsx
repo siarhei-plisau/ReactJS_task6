@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './Card.module.scss';
 import defaulImage from '../../Assets/img/no_image.png';
 
-function Card( {id, price, title, imageUrl,about, handleDeleteCard} ) {
+function Card( {id, price, title, imageUrl,about, deleteCard} ) {
     return (
       <div className={styles.wrapper}>
-        <button onClick ={() => handleDeleteCard(id)}>X</button>
+        <button onClick ={() => deleteCard(id)}>X</button>
         <div className={styles.card}>
           <p>{title}</p>
           <img src={imageUrl} onError={(e) => e.target.src = defaulImage } alt='pic' />

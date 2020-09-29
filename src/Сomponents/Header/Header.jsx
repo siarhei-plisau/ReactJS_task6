@@ -6,7 +6,7 @@ import MenuList from '../MenuList';
 function Header(props) {
   return (
     <header className={styles.header}>
-      <UserAvatar {...props} />
+      <UserAvatar />
       <MenuList />
     </header>
   );

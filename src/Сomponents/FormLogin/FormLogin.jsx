@@ -1,77 +1,74 @@
 import React from 'react';
+import {
+  changeUserName,
+  changePassword,
+  submitFormLogIn,
+ } from '../../redux/actions';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import styles from './FormLogin.module.scss';
 
-export default class FormLogin extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userName: '',
-      password: '',
-      errorLogin: false,
-    }
-    this.handleLogIn = this.handleLogIn.bind(this);
-    this.handleChangeUserName = this.handleChangeUserName.bind(this);
-    this.handleChangePassword = this.handleChangePassword.bind(this);
-  }
-  handleChangeUserName(event) {
-    this.setState({userName: event.target.value});
-  }
-  handleChangePassword(event) {
-    this.setState({password: event.target.value});
-  }
+const FormLogin = (props) => {
+  const {
+    userName,
+    password,
+    errorLogin,
+    handleChangeUserName,
+    handleChangePassword,
+    submitFormLogIn,
+  } = props;
 
-  handleLogIn(event) {
-    event.preventDefault();
-    const {userName, password} = this.props.userData;
-    if ( userName === this.state.userName && password === this.state.password) {
-    this.setState({errorLogin: false}); 
-    this.props.access();
-   } else {
-    this.setState({
-      userName: '',
-      password: '',
-      errorLogin: true,
-    });
-   }
-  }
+  return (
+    <form onSubmit={ (e) => { 
+                      e.preventDefault();
+                      submitFormLogIn()
+                    }
+    
+      } className={styles.formLogin}>
+      { errorLogin ? 
+        <div className={styles.errorLogin}>Error! Registration can't be completed.</div> :
+        null
+      }
+      <label>
+        User name
+        <input
+          type="text"
+          className={styles.userName}
+          value={userName}
+          required
+          onChange={(e) => { handleChangeUserName(e.target.value) }}
+        />
+      </label>
 
-    render() {
-      const {userName, password, errorLogin} = this.state;
-      return (
-        <form onSubmit={this.handleLogIn} className={styles.formLogin}>
-          { errorLogin ? 
-          <div className={styles.errorLogin}>Error! Registration can't be completed.</div> :
-           null
-          }
-          <label>
-            User name
-            <input
-              ref={this.userNameRef}
-              type="text"
-              className={styles.userName}
-              value={userName}
-              required
-              onChange={this.handleChangeUserName}
-            />
+      <label>
+        Password
+        <input
+          type="password"
+          className={styles.password}
+          value={password}
+          required
+          onChange={(e) => { handleChangePassword(e.target.value) }}
+        />
+      </label>
+      <button type="submit">Log In</button>
+    </form>
+  )
+}
 
-          </label>
+const mapStateToProps = state => {
+  return {
+    userName: state.access.userName,
+    password: state.access.password,
+    errorLogin: state.access.errorLogin
+  };
+};
 
-          <label>
-            Password
-            <input
-              ref={this.passwordRef}
-              type="password"
-              className={styles.password}
-              value={password}
-              required
-              onChange={this.handleChangePassword}
-            />
-
-          </label>
-          <button type="submit">Log In</button>
-
-          </form>
-
-    );
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleChangeUserName: bindActionCreators(changeUserName, dispatch),
+    handleChangePassword: bindActionCreators(changePassword, dispatch),
+    submitFormLogIn: bindActionCreators(submitFormLogIn, dispatch),
   }
 }
+export default connect(mapStateToProps, mapDispatchToProps)(FormLogin);

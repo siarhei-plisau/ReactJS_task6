@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './Profile.module.scss';
   
 function Profile(props) {
-  const { avatar, profession, about } = props.userData;
+  const { avatarImage, profession, about } = props.userData;
   return (
     <article className={styles.userCard}>
       <div className={styles.wrapperImage}>
         <img className={styles.userPhoto}
-                   src={avatar.image}
-                   alt={avatar.alt}/>
+                   src={avatarImage}
+                   alt='user'/>
       </div>
       <div className={styles.wrapperAbout}>
         <h2>{profession}</h2>
